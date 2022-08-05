@@ -1,14 +1,11 @@
 package entities;
 
-import javax.imageio.ImageIO;
+import utilz.LoadSave;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.stream.Stream;
 
-import static utilz.Constants.Directions.*;
-import static utilz.Constants.Directions.DOWN;
 import static utilz.Constants.PlayerConstants.*;
 
 public class Player extends Entity{
@@ -41,13 +38,11 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g){
-        g.drawImage(animations[playerAction][aniIndex], (int)x, (int)y, 256, 160, null);
+        g.drawImage(animations[playerAction][aniIndex], (int)x, (int)y, 64, 40, null);
     }
 
     private void loadAnimations() {
-        InputStream is = getClass().getResourceAsStream("/player_sprites.png");
-        try {
-            BufferedImage image = ImageIO.read(is);
+            BufferedImage image = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
             animations = new BufferedImage[9][6];
             Stream.of(animations).forEach(System.out::println);
@@ -56,15 +51,6 @@ public class Player extends Entity{
                     animations[j][i] = image.getSubimage(i * 64, j * 40, 64, 40);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try{
-                is.close();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     public void resetDirBooleans(){
