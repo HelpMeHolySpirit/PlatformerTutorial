@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 public class Playing extends State implements Statemethods{
     private Player player;
     private LevelManager levelManager;
-    private boolean paused = true;
+    private boolean paused = false;
     private PauseOverlay pauseOverlay;
 
 
@@ -99,8 +99,8 @@ public class Playing extends State implements Statemethods{
             case KeyEvent.VK_SPACE:
                 player.setJump(true);
                 break;
-            case KeyEvent.VK_BACK_SPACE:
-                Gamestate.state = Gamestate.MENU;
+            case KeyEvent.VK_ESCAPE:
+                paused = !paused;
                 break;
         }
     }
